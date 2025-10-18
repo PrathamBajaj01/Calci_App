@@ -35,10 +35,11 @@ pipeline {
                 script {
                     // Use AWS credentials stored in Jenkins
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins']]) {
-                        sh '''
-sam build --template-file sam-template.yaml --use-container
-sam deploy --template-file .aws-sam/build/sam-template.yaml --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
+                      sh '''
+sam build --use-container --template-file sam-template.yaml
+sam deploy --template-file .aws-sam/build/template.yaml --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
 '''
+
 
                     }
                 }
