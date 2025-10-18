@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_DEFAULT_REGION = 'us-east-1'  // Set your AWS region
+        AWS_DEFAULT_REGION = 'us-east-1' // your AWS region
     }
 
     stages {
@@ -33,11 +33,13 @@ pipeline {
         stage('Deploy Lambda') {
             steps {
                 script {
-                    // Deploy Lambda via SAM
-                    sh '''
-                    sam build --use-container
-                    sam deploy --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
-                    '''
+                    // Use AWS credentials stored in Jenkins
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins']]) {
+                        sh '''
+                        sam build --use-container
+                        sam deploy --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
+                        '''
+                    }
                 }
             }
         }
