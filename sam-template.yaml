@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Calculator Lambda Function
+
+Resources:
+  CalculatorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CalculatorFunction
+      Handler: calci.lambda_handler
+      Runtime: python3.12
+      CodeUri: .
+      MemorySize: 128
+      Timeout: 10
+      Policies: AWSLambdaBasicExecutionRole
+      Tags:
+        Project: CalciApp
+        Owner: YourName

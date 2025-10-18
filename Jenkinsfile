@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_DEFAULT_REGION = 'us-east-1'  // Set your AWS region
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -25,6 +29,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy Lambda') {
+            steps {
+                script {
+                    // Deploy Lambda via SAM
+                    sh '''
+                    sam build --use-container
+                    sam deploy --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
+                    '''
+                }
+            }
+        }
     }
 
     post {
@@ -32,10 +48,10 @@ pipeline {
             echo 'Pipeline finished'
         }
         success {
-            echo 'All tests passed ✅'
+            echo 'All tests passed and Lambda deployed ✅'
         }
         failure {
-            echo 'Some tests failed ❌'
+            echo 'Some tests failed or deployment failed ❌'
         }
     }
 }
