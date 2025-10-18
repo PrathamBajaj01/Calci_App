@@ -37,7 +37,7 @@ pipeline {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins']]) {
                       sh '''
 sam build --use-container --template-file sam-template.yaml
-sam deploy --template-file .aws-sam/build/template.yaml --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM
+sam deploy --template-file .aws-sam/build/template.yaml --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM --resolve-s3
 '''
 
 
