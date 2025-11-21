@@ -1,10 +1,10 @@
-🧮 Calci App — Serverless Calculator with Jenkins, Docker & AWS SAM
-📘 Overview
+## 🧮 Calci App — Serverless Calculator with Jenkins, Docker & AWS SAM
+## 📘 Overview
 
 Calci App is a serverless calculator that performs basic arithmetic operations — addition, subtraction, and multiplication.
 The project demonstrates a full CI/CD pipeline using Jenkins, Docker, and AWS SAM to automate build, test, and deployment to AWS Lambda.
 
-⚙️ Architecture
+## ⚙️ Architecture
 GitHub → Jenkins → Docker → AWS SAM → AWS Lambda
 
 
@@ -18,7 +18,7 @@ AWS SAM packages and deploys the Lambda function using CloudFormation.
 
 The function runs serverlessly on AWS Lambda.
 
-🧩 Components Used
+## 🧩 Components Used
 Tool	Purpose
 Python	Calculator logic and Lambda handler
 Pytest	Unit testing for all operations
@@ -27,20 +27,20 @@ Jenkins	CI/CD automation (build → test → deploy)
 AWS SAM	Serverless deployment framework
 AWS Lambda	Executes the calculator function
 CloudFormation & S3	Stack and artifact management
-🚀 Implementation Steps
-1️⃣ Application Setup
+## 🚀 Implementation Steps
+# 1️⃣ Application Setup
 
 Created calci.py with basic arithmetic logic and a Lambda-compatible handler.
 
 Added unit tests using pytest.
 
-2️⃣ Docker Setup
+# 2️⃣ Docker Setup
 
 Wrote a Dockerfile to containerize the app for consistent builds.
 
 Built and ran the container locally to verify functionality.
 
-3️⃣ AWS SAM Deployment
+# 3️⃣ AWS SAM Deployment
 
 Created template.yaml defining the Lambda function and IAM role.
 
@@ -52,7 +52,7 @@ sam deploy --guided
 
 This deployed the Lambda function and created the required AWS resources.
 
-4️⃣ Jenkins Pipeline
+# 4️⃣ Jenkins Pipeline
 
 Configured Jenkins with Docker and AWS credentials.
 
@@ -68,7 +68,7 @@ Deploy (using sam deploy)
 
 Connected Jenkins and GitHub via webhook for automatic builds on each commit.
 
-5️⃣ Validation
+# 5️⃣ Validation
 
 Verified successful Lambda deployment through AWS Console and CLI:
 
@@ -76,7 +76,7 @@ aws lambda invoke --function-name CalculatorFunction \
 --payload '{"a":5,"b":3,"operation":"add"}' response.json
 cat response.json
 
-🧱 Use Case
+## 🧱 Use Case
 
 This project demonstrates how modern DevOps tools can be combined to:
 
@@ -86,7 +86,7 @@ Deploy and manage serverless applications efficiently.
 
 Integrate testing, containerization, and cloud deployment seamlessly.
 
-🧼 Cleanup
+## 🧼 Cleanup
 
 To delete all resources after testing:
 
@@ -95,7 +95,7 @@ aws cloudformation delete-stack --stack-name calci-stack
 
 Also remove associated S3 buckets and IAM roles if created.
 
-📄 Summary
+## 📄 Summary
 
 Fully automated CI/CD pipeline for a serverless Python app.
 
