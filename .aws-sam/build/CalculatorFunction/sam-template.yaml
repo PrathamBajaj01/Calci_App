@@ -15,4 +15,4 @@ Resources:
       Policies: AWSLambdaBasicExecutionRole
       Tags:
         Project: CalciApp
-        Owner: Pratham
+        Owner: YourName

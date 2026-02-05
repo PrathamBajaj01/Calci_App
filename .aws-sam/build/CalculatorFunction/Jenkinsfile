@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_DEFAULT_REGION = 'us-east-1'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -29,22 +25,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy Lambda') {
-            steps {
-                script {
-                    
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins']]) {
-                      sh '''
-sam build --use-container --template-file sam-template.yaml
-sam deploy --template-file .aws-sam/build/template.yaml --stack-name calci-stack --no-confirm-changeset --capabilities CAPABILITY_IAM --resolve-s3
-'''
-
-
-                    }
-                }
-            }
-        }
     }
 
     post {
@@ -52,10 +32,10 @@ sam deploy --template-file .aws-sam/build/template.yaml --stack-name calci-stack
             echo 'Pipeline finished'
         }
         success {
-            echo 'All tests passed and Lambda deployed'
+            echo 'All tests passed ✅'
         }
         failure {
-            echo 'Some tests failed or deployment failed'
+            echo 'Some tests failed ❌'
         }
     }
 }
