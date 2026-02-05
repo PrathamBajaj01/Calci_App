@@ -1,0 +1,56 @@
+name: OIDC Continuous Deployment
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+    
+
+jobs:
+
+  deploy_production:
+    name: 'Deploy to production'
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - uses: actions/checkout@v4
+      name: 'Checkout repository'
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
+      with:
+        role-to-assume: arn:aws:iam::893915939857:role/github-wf-calciapp
+        role-session-name: GithubActionsOIDCSession
+        aws-region: us-east-1
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.9"    
+        
+    - name: Install SAM CLI
+      run: |
+          pip install aws-sam-cli
+
+    - name: Build SAM application
+      run: |
+          sam build --use-container --template-file sam-template.yaml
+
+    - name: Deploy SAM application
+      run: |
+          sam deploy \
+            --template-file .aws-sam/build/template.yaml \
+            --stack-name calci-api\
+            --no-confirm-changeset \
+            --capabilities CAPABILITY_IAM \
+            --resolve-s3
