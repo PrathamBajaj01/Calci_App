@@ -48,9 +48,9 @@ jobs:
 
     - name: Deploy SAM application
       run: |
-          sam deploy \
-            --template-file .aws-sam/build/template.yaml \
-            --stack-name calci-api\
-            --no-confirm-changeset \
-            --capabilities CAPABILITY_IAM \
-            --resolve-s3
+        sam deploy \
+        --template-file .aws-sam/build/template.yaml \
+        --stack-name calci-api-dev \
+        --s3-bucket calci-app-s3-v1 \
+        --no-confirm-changeset \
+        --capabilities CAPABILITY_IAM
